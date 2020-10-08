@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ProductService} from '../../services/product.service';
 import {Router} from '@angular/router';
+import {ProductModelServer, ServerResponse} from '../../models/product.model';
 
 @Component({
   selector: 'app-home',
@@ -9,21 +10,20 @@ import {Router} from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  products: any[] = [];
+  products: ProductModelServer[] = [];
+
   constructor(private productService: ProductService,
               private router: Router) { }
 
   ngOnInit(): void {
   this.productService.getAllProducts()
-    // tslint:disable-next-line:ban-types
-    .subscribe((prods: {count: Number, products: any[]}) => {
+    .subscribe((prods: ServerResponse ) => {
       this.products = prods.products;
-      console.log(this.products);
     });
   }
 
-  // tslint:disable-next-line:typedef ban-types
-  selectProduct(id: Number) {
+  // tslint:disable-next-line:typedef
+  selectProduct(id: number) {
     this.router.navigate(['/product', id])
       .then();
   }

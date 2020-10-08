@@ -438,7 +438,10 @@ textarea.input {
   color: #D10024;
   margin-right: 5px;
 }
-
+.search-bar {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 0.5fr;
+}
 /*----------------------------*\
 	Logo
 \*----------------------------*/
@@ -475,7 +478,7 @@ textarea.input {
 }
 
 .header-search form .input {
-  width: calc(100% - 260px);
+  width: calc(100% - 100px);
   margin-right: -4px;
 }
 
