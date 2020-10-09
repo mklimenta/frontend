@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ProductService} from '../../services/product.service';
 import {Router} from '@angular/router';
 import {ProductModelServer, ServerResponse} from '../../models/product.model';
+import {CartService} from '../../services/cart.service';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,8 @@ export class HomeComponent implements OnInit {
   products: ProductModelServer[] = [];
 
   constructor(private productService: ProductService,
-              private router: Router) { }
+              private router: Router,
+              private cartService: CartService) { }
 
   ngOnInit(): void {
   this.productService.getAllProducts()
@@ -26,5 +28,9 @@ export class HomeComponent implements OnInit {
   selectProduct(id: number) {
     this.router.navigate(['/product', id])
       .then();
+  }
+  // tslint:disable-next-line:typedef
+  addToCart(id: number) {
+    this.cartService.addProductToCart(id);
   }
 }
