@@ -171,7 +171,7 @@ export class CartService {
       data.numInCart--;
 
       if (data.numInCart < 1 ) {
-        // TODO Delete the Product from the Cart
+        this.DeleteProductFromCart(index);
         this.cartData$.next({ ... this.cartDataServer });
       } else {
         this.cartData$.next({ ... this.cartDataServer });
@@ -184,7 +184,7 @@ export class CartService {
   }
 
   // tslint:disable-next-line:typedef
-  DeleteProductFromCart(index) {
+  DeleteProductFromCart(index: number) {
     if (window.confirm('Are you sure you want to delete the item?')) {
       this.cartDataServer.data.splice(index, 1);
       this.cartDataClient.productData.splice(index, 1);
@@ -275,6 +275,16 @@ export class CartService {
     });
     this.cartDataServer.total = Total;
     this.cartTotal$.next(this.cartDataServer.total);
+  }
+
+  // tslint:disable-next-line:typedef
+  calculateSubTotal(index: number) {
+    let subTotal = 0;
+
+    const p = this.cartDataServer.data[index];
+    subTotal = p.product.price * p.numInCart;
+
+    return subTotal;
   }
 
   // tslint:disable-next-line:typedef
