@@ -15,6 +15,21 @@ import { ThankyouComponent } from './components/thankyou/thankyou.component';
 import { HttpClientModule } from '@angular/common/http';
 import {NgxSpinnerModule} from 'ngx-spinner';
 import {ToastrModule} from 'ngx-toastr';
+import { LoginComponent } from './components/login/login.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import {
+  AmazonLoginProvider,
+  FacebookLoginProvider,
+  GoogleLoginProvider,
+  SocialAuthServiceConfig,
+  SocialLoginModule
+} from 'angularx-social-login';
+import {FormsModule} from '@angular/forms';
+
+const googleLoginOptions = {
+  scope: 'profile email'
+}; // https://developers.google.com/api-client-library/javascript/reference/referencedocs#gapiauth2clientconfig
+
 
 @NgModule({
   declarations: [
@@ -26,6 +41,8 @@ import {ToastrModule} from 'ngx-toastr';
     HomeComponent,
     ProductComponent,
     ThankyouComponent,
+    LoginComponent,
+    ProfileComponent,
   ],
   imports: [
     CommonModule,
@@ -35,8 +52,34 @@ import {ToastrModule} from 'ngx-toastr';
     HttpClientModule,
     NgxSpinnerModule,
     ToastrModule.forRoot(),
+    SocialLoginModule,
+    FormsModule,
   ],
-  providers: [],
+  providers: [{
+    provide: 'SocialAuthServiceConfig',
+    useValue: {
+      autoLogin: false,
+      providers: [
+        {
+          id: GoogleLoginProvider.PROVIDER_ID,
+          provider: new GoogleLoginProvider(
+            '798260477075-79ls0e58nag61630a0rf9kskqmkh7e4t.apps.googleusercontent.com',
+            googleLoginOptions
+          ),
+        },
+        // {
+        //   id: FacebookLoginProvider.PROVIDER_ID,
+        //   provider: new FacebookLoginProvider('clientId'),
+        // },
+        // {
+        //   id: AmazonLoginProvider.PROVIDER_ID,
+        //   provider: new AmazonLoginProvider(
+        //     'clientId'
+        //   ),
+        // },
+      ],
+    } as SocialAuthServiceConfig,
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
