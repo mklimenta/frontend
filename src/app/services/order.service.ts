@@ -14,7 +14,7 @@ export class OrderService {
 
   // tslint:disable-next-line:typedef
   getSingleOrder(orderId: number) {
-    return this.http.get<ProductResponseModel[]>(this.SERVER_URL + '/orders/' + orderId).toPromise();
+    return this.http.get<ProductResponseModel[]>(this.SERVER_URL + 'orders/' + orderId).toPromise();
   }
 }
 
